@@ -21,7 +21,7 @@ application: vis {
 }
 
 application: tile {
-  label: "Tile Extension Dashboard"
+  label: "Audience creation form"
   # file: "bundle.js"
   url: "https://localhost:3000/bundle.js"
   mount_points: {
