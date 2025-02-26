@@ -24,13 +24,7 @@
 
  */
 import React, { useContext, useEffect, useState } from 'react'
-import {
-  SpaceVertical,
-  Button,
-  Space,
-  FloatingLabelField,
-  InputText,
-} from '@looker/components'
+import { SpaceVertical, Button, Space, InputText } from '@looker/components'
 import { ExtensionContext40 } from '@looker/extension-sdk-react'
 
 export const DashboardTile = ({ standalone }) => {
@@ -38,6 +32,11 @@ export const DashboardTile = ({ standalone }) => {
   const [formOpen, setFormOpen] = useState(false)
   const [audienceTitle, setAudienceTitle] = useState('')
   const height = standalone ? 'calc(100vh - 100px)' : '100%'
+
+  const handleCreate = () => {
+    // eslint-disable-next-line no-console
+    console.log('create', audienceTitle)
+  }
 
   useEffect(() => {
     extensionSDK.rendered()
@@ -61,22 +60,22 @@ export const DashboardTile = ({ standalone }) => {
             />
           </Space>
 
-          <Space gap="medium" justify="center" height={'100%'} align="flex-end">
+          <Space
+            gap="medium"
+            justify="fled-end"
+            height={'100%'}
+            align="flex-end"
+            flex={1}
+          >
             <Button
-              color="critical"
+              color="neutral"
               onClick={() => {
                 setFormOpen(false)
               }}
             >
               Cancel
             </Button>
-            <Button
-              onClick={() => {
-                // eslint-disable-next-line no-console
-                console.log('create', audienceTitle)
-              }}
-              disabled={!audienceTitle}
-            >
+            <Button onClick={handleCreate} disabled={!audienceTitle}>
               Create
             </Button>
           </Space>
