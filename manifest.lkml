@@ -1,5 +1,5 @@
 
-project_name: "dashboard-tile"
+project_name: "audience-creation"
 
 application: vis {
   # file: "bundle.js"
