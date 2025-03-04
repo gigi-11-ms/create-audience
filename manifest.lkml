@@ -16,7 +16,7 @@ application: vis {
     external_api_urls: []
     oauth2_urls: []
     scoped_user_attributes: []
-    global_user_attributes: ["first_name", "last_name", "email"]
+    global_user_attributes: ["first_name", "last_name", "email", "user_name"]
   }
 }
 
@@ -36,6 +36,6 @@ application: tile {
     external_api_urls: []
     oauth2_urls: []
     scoped_user_attributes: []
-    global_user_attributes: ["first_name", "last_name", "email"]
+    global_user_attributes: ["first_name", "last_name", "email", "user_name"]
   }
 }
