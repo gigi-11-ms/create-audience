@@ -13,7 +13,7 @@ application: vis {
     local_storage: yes
     use_form_submit: yes
     core_api_methods: []
-    external_api_urls: []
+    external_api_urls: ["https://dia-audience-manager-948043638698.europe-southwest1.run.app"]
     oauth2_urls: []
     scoped_user_attributes: []
     global_user_attributes: ["first_name", "last_name", "email", "user_name"]
@@ -33,7 +33,7 @@ application: tile {
     local_storage: yes
     use_form_submit: yes
     core_api_methods: ["run_inline_query","all_lookml_models"]
-    external_api_urls: []
+    external_api_urls: ["https://dia-audience-manager-948043638698.europe-southwest1.run.app"]
     oauth2_urls: []
     scoped_user_attributes: []
     global_user_attributes: ["first_name", "last_name", "email", "user_name"]
