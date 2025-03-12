@@ -23,24 +23,76 @@
  SOFTWARE.
 
  */
-import React, { useContext, useEffect, useState } from 'react'
-import { SpaceVertical, Button, Space, InputText } from '@looker/components'
+import React, { useCallback, useContext, useEffect, useState } from 'react'
+import {
+  SpaceVertical,
+  Button,
+  Space,
+  InputText,
+  Spinner,
+  Span,
+} from '@looker/components'
 import { ExtensionContext40 } from '@looker/extension-sdk-react'
+import { createAudience } from '../../api'
 
 export const DashboardTile = ({ standalone }) => {
-  const { extensionSDK } = useContext(ExtensionContext40)
+  const {
+    extensionSDK,
+    tileSDK: {
+      tileHostData: { dashboardFilters },
+    },
+  } = useContext(ExtensionContext40)
   const [formOpen, setFormOpen] = useState(false)
   const [audienceTitle, setAudienceTitle] = useState('')
+
+  const [isLoading, setIsLoading] = useState(false)
+  const [isSuccess, setIsSuccess] = useState(false)
+
   const height = standalone ? 'calc(100vh - 100px)' : '100%'
 
-  const handleCreate = () => {
-    // eslint-disable-next-line no-console
-    console.log('create', audienceTitle)
-  }
+  const handleCreate = useCallback(async () => {
+    try {
+      setIsLoading(true)
+      const email = await extensionSDK.userAttributeGetItem('email')
+      const username = await extensionSDK.userAttributeGetItem('name')
+
+      await createAudience({ audienceTitle, email, username, dashboardFilters })
+      setFormOpen(false)
+      setAudienceTitle('')
+      setIsSuccess(true)
+    } catch (error) {
+      console.error(error)
+      setIsSuccess(false)
+    } finally {
+      setIsLoading(false)
+    }
+  }, [dashboardFilters, audienceTitle])
 
   useEffect(() => {
     extensionSDK.rendered()
   }, [])
+
+  if (isLoading)
+    return (
+      <Space justify="center">
+        <Spinner />
+      </Space>
+    )
+
+  if (isSuccess)
+    return (
+      <Space justify="center">
+        <Span>Audience created!</Span>
+        <Button
+          onClick={() => {
+            setIsSuccess(false)
+            setFormOpen(true)
+          }}
+        >
+          Create New Audience
+        </Button>
+      </Space>
+    )
 
   return (
     <SpaceVertical
