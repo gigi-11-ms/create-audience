@@ -16,7 +16,7 @@ application: vis {
     external_api_urls: ["https://dia-audience-manager-948043638698.europe-southwest1.run.app"]
     oauth2_urls: []
     scoped_user_attributes: []
-    global_user_attributes: ["first_name", "last_name", "email", "user_name"]
+    global_user_attributes: ["first_name", "last_name", "email", "name"]
   }
 }
 
@@ -36,6 +36,6 @@ application: tile {
     external_api_urls: ["https://dia-audience-manager-948043638698.europe-southwest1.run.app"]
     oauth2_urls: []
     scoped_user_attributes: []
-    global_user_attributes: ["first_name", "last_name", "email", "user_name"]
+    global_user_attributes: ["first_name", "last_name", "email", "name"]
   }
 }
