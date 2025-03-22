@@ -2,8 +2,8 @@
 project_name: "audience-creation"
 
 application: vis {
-  # file: "bundle.js"
-  url: "https://localhost:3000/bundle.js"
+  file: "dist/bundle.js"
+  # url: "https://localhost:3000/bundle.js"
   mount_points: {
     dashboard_vis: yes
     standalone: no
