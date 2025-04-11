@@ -22,8 +22,8 @@ application: vis {
 
 application: tile {
   label: "Audience Creation Form"
-  # file: "dist/bundle.js"
-  url: "https://localhost:3000/bundle.js"
+  file: "dist/bundle.js"
+  # url: "https://localhost:3000/bundle.js"
   mount_points: {
     dashboard_tile: yes
     standalone: no
