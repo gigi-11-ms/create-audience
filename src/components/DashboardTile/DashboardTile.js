@@ -38,18 +38,38 @@ import { createAudience } from '../../api'
 export const DashboardTile = ({ standalone }) => {
   const {
     extensionSDK,
+    coreSDK,
     tileSDK: {
-      tileHostData: { dashboardFilters, ...restFilters },
+      tileHostData: { dashboardFilters, dashboardId },
     },
     ...rest
   } = useContext(ExtensionContext40)
   const [formOpen, setFormOpen] = useState(false)
   const [audienceTitle, setAudienceTitle] = useState('')
-
+  const [filters, setFilters] = useState()
+  const [filtersLoading, setFiltersLoading] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
   const [isSuccess, setIsSuccess] = useState(false)
 
-  console.log(restFilters, rest)
+  useEffect(() => {
+    const fetchDashboardFilters = async ({ sdk, dashboardId }) => {
+      setFiltersLoading(true)
+      try {
+        const dashboardElements = await sdk.ok(
+          sdk.dashboard_dashboard_elements(dashboardId)
+        )
+        const filters =
+          dashboardElements[0]?.result_maker?.filterables[0]?.listen
+        setFilters(filters)
+      } catch (error) {
+        console.error('Something went wrong')
+      } finally {
+        setFiltersLoading(false)
+      }
+    }
+    if (coreSDK && dashboardId)
+      fetchDashboardFilters({ sdk: coreSDK, dashboardId })
+  }, [dashboardId])
 
   const height = standalone ? 'calc(100vh - 100px)' : '100%'
 
@@ -59,7 +79,17 @@ export const DashboardTile = ({ standalone }) => {
       const email = await extensionSDK.userAttributeGetItem('email')
       const username = await extensionSDK.userAttributeGetItem('name')
 
-      await createAudience({ audienceTitle, email, username, dashboardFilters })
+      const adjustedFilters = {}
+      filters.forEach(({ dashboard_filter_name: name, field }) => {
+        adjustedFilters[field] = dashboardFilters[name]
+      })
+
+      await createAudience({
+        audienceTitle,
+        email,
+        username,
+        dashboardFilters: adjustedFilters,
+      })
       setFormOpen(false)
       setAudienceTitle('')
       setIsSuccess(true)
@@ -69,7 +99,7 @@ export const DashboardTile = ({ standalone }) => {
     } finally {
       setIsLoading(false)
     }
-  }, [dashboardFilters, audienceTitle])
+  }, [dashboardFilters, audienceTitle, filters])
 
   useEffect(() => {
     extensionSDK.rendered()
@@ -130,7 +160,10 @@ export const DashboardTile = ({ standalone }) => {
             >
               Cancel
             </Button>
-            <Button onClick={handleCreate} disabled={!audienceTitle}>
+            <Button
+              onClick={handleCreate}
+              disabled={!audienceTitle || filtersLoading}
+            >
               Create
             </Button>
           </Space>
