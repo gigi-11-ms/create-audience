@@ -39,14 +39,17 @@ export const DashboardTile = ({ standalone }) => {
   const {
     extensionSDK,
     tileSDK: {
-      tileHostData: { dashboardFilters },
+      tileHostData: { dashboardFilters, ...restFilters },
     },
+    ...rest
   } = useContext(ExtensionContext40)
   const [formOpen, setFormOpen] = useState(false)
   const [audienceTitle, setAudienceTitle] = useState('')
 
   const [isLoading, setIsLoading] = useState(false)
   const [isSuccess, setIsSuccess] = useState(false)
+
+  console.log(restFilters, rest)
 
   const height = standalone ? 'calc(100vh - 100px)' : '100%'
 
