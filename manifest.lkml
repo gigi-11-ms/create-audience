@@ -22,8 +22,8 @@ application: vis {
 
 application: tile {
   label: "Audience Creation Form"
-  file: "dist/bundle.js"
-  # url: "https://localhost:3000/bundle.js"
+  # file: "dist/bundle.js"
+  url: "https://localhost:3000/bundle.js"
   mount_points: {
     dashboard_tile: yes
     standalone: no
@@ -32,7 +32,7 @@ application: tile {
   entitlements: {
     local_storage: yes
     use_form_submit: yes
-    core_api_methods: ["run_inline_query","all_lookml_models"]
+    core_api_methods: ["run_inline_query","all_lookml_models", "dashboard_dashboard_filters"]
     external_api_urls: ["https://dia-audience-manager-948043638698.europe-southwest1.run.app"]
     oauth2_urls: []
     scoped_user_attributes: []

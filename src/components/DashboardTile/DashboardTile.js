@@ -38,15 +38,30 @@ import { createAudience } from '../../api'
 export const DashboardTile = ({ standalone }) => {
   const {
     extensionSDK,
+    coreSDK,
     tileSDK: {
-      tileHostData: { dashboardFilters },
+      tileHostData: { dashboardFilters, dashboardId, ...restFilters },
     },
+    ...rest
   } = useContext(ExtensionContext40)
   const [formOpen, setFormOpen] = useState(false)
   const [audienceTitle, setAudienceTitle] = useState('')
+  const [filters, setFilters] = useState()
 
   const [isLoading, setIsLoading] = useState(false)
   const [isSuccess, setIsSuccess] = useState(false)
+
+  useEffect(() => {
+    const fetchDashboardFilters = async ({ sdk, dashboardId }) => {
+      const filters = await sdk.ok(sdk.dashboard_dashboard_filters(dashboardId))
+      setFilters(filters)
+    }
+
+    if (coreSDK && dashboardId)
+      fetchDashboardFilters({ sdk: coreSDK, dashboardId })
+  }, [dashboardId])
+
+  console.log(restFilters, rest, filters)
 
   const height = standalone ? 'calc(100vh - 100px)' : '100%'
 
