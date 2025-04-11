@@ -40,7 +40,7 @@ export const DashboardTile = ({ standalone }) => {
     extensionSDK,
     coreSDK,
     tileSDK: {
-      tileHostData: { dashboardFilters, dashboardId, ...restFilters },
+      tileHostData: { dashboardFilters, dashboardId },
     },
     ...rest
   } = useContext(ExtensionContext40)
